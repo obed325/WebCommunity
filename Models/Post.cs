@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebCommunity.Models
 {
-    public class ForumPost
+    public class Post
     {
         public int Id { get; set; }
         public string Subject { get; set; }
@@ -15,6 +15,6 @@ namespace WebCommunity.Models
 
         public virtual ApplicationUser User { get; set; }
         public virtual Forum Forum { get; set; }
-        public virtual IEnumerable<ForumPost> Reply {get; set;}
+        public virtual IEnumerable<Post> Reply {get; set;}
     }
 }

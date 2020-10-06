@@ -1,0 +1,20 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+}
+
+<h3 class="bg-info text-white" style="padding-left:5px">List of users by user name</h3>
+
+<select class="form-control">
+    @foreach (ApplicationUser item in Model)
+    {
+        <option class="form-control">@item.UserName</option>
+    }
+</select>
+
+
+
+@*<select asp-items="@new SelectList(x=> )*@
+@*@Html.DropDownList("Users", new SelectList(Model, "Value", "Text"))
+
+@Html.DropDownList( "" ,(Model => Model.username, new SelectList{ @class = "form-control" })*@

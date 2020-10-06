@@ -28,7 +28,7 @@ namespace WebCommunity.Services
 
         public IEnumerable<Forum> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Forums;
         }
 
         public IEnumerable<ApplicationUser> GetAllActiveUsers()

@@ -15,7 +15,8 @@ namespace WebCommunity.Models
         Task Add(Post post);
         Task Delete(int id);
         Task EditPostContent(int id, string newContent);
-        
+        IEnumerable<ApplicationUser> GetAllUsers(IEnumerable<Post> posts);
+
         //Task AddReply(PostReply reply);
 
     }

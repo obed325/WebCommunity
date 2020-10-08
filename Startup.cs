@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using WebCommunity.Models;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using WebCommunity.Services;
 
 namespace WebCommunity
 {
@@ -63,6 +64,7 @@ namespace WebCommunity
             //services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddScoped<IForum, WebCommunity.Services.ForumService>();
+            services.AddScoped<IPost, PostService>();
 
         }
 

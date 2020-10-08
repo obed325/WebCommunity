@@ -45,7 +45,7 @@ namespace WebCommunity.Controllers
                 AuthorRating = post.User.Rating,
                 Title = post.Subject,
                 DatePosted = post.Created.ToString(),
-                RepliesCount = post.Reply.Count(),
+                RepliesCount = post.Replies.Count(),
                 Forum = BuildForumListing(post)
             });
 

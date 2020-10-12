@@ -17,43 +17,43 @@
                 <a class="navbar-brand navLogo" asp-area="" asp-controller="Home" asp-action="Index">WebCommunity</a>
 
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a asp-controller="Forum" asp-action="Index">Forums</a>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Forum" asp-action="Index">Forums</a>
                     </li>
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Profile</li>
-                                <li><a asp-controller="Profile" asp-action="Detail">My profile</a></li>
-                                @if(User.IsInRole("Admin"))
+                                <li role="separator" class="divider nav-item"></li>
+                                <li class="dropdown-header nav-item">Profile</li>
+                                <li><a class="nav-link text-dark" asp-controller="Profile" asp-action="Detail">My profile</a></li>
+                                @if (User.IsInRole("Admin"))
                                 {
-                                    <li role="separator" class="divider"></li>
-                                    <li class="dropdown-header">Admin</li>
-                                    <li><a asp-controller="Forum" asp-action="Create">Create Forum</a></li>
-                                    <li><a asp-controller="Profile" asp-action="Index">View Users</a></li>
+                                    <li role="separator" class="divider nav-item"></li>
+                                    <li class="dropdown-header nav-item">Admin</li>
+                                    <li><a class="nav-link text-dark" asp-controller="Forum" asp-action="Create">Create Forum</a></li>
+                                    <li><a class="nav-link text-dark" asp-controller="Profile" asp-action="Index">View Users</a></li>
                                 }
                             </ul>
                         </li>
                     }
                 </ul>
-                @if(!SignInManager.IsSignedIn(User))
+                @if (!SignInManager.IsSignedIn(User))
                 {
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-controller="Account" asp-action="Login">Sign in</a></li>
-                        <li class="active"><a asp-controller="Account" asp-action="Register">Register</a></li>
+                        <li><a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Sign in</a></li>
+                        <li class="active"><a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a></li>
                     </ul>
                 }
                 @if (SignInManager.IsSignedIn(User))
                 {
-                <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>Hello @UserManager.GetUserName(User)</li>
-                        <li><a asp-controller="Account" asp-action="Logout">Sign out</a></li>
-                    </ul>
-                </form>
+                    <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>Hello @UserManager.GetUserName(User)</li>
+                            <li><a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Sign out</a></li>
+                        </ul>
+                    </form>
                 }
 
                 @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -64,7 +64,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
@@ -72,7 +72,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li>*@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -92,6 +92,8 @@
                 </div>
             </div>
         </nav>
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     </header>
     <div class="container">
         <main role="main" class="pb-3">

@@ -37,7 +37,7 @@ namespace WebCommunity.Services
                 .Include(forum => forum.Posts);
         }
 
-        public IEnumerable<ApplicationUser> GetAllActiveUsers(int forumId)
+        public IEnumerable<ApplicationUser> GetActiveUsers(int forumId)
         {
             var posts = GetById(forumId).Posts;
 
@@ -49,16 +49,17 @@ namespace WebCommunity.Services
             return _postService.GetAllUsers(posts);
         }
 
-        public IEnumerable<ApplicationUser> GetAllActiveUsers()
-        {
-            throw new NotImplementedException();
-        }
-
         public Forum GetById(int id)
         {
-            var forum = _context.Forums.Where(f => f.Id == id)
-                .Include(f => f.Posts).ThenInclude(p => p.User)
-                .Include(f => f.Posts).ThenInclude(p => p.Replies).ThenInclude(r => r.User)
+            var forum = _context.Forums
+                .Where(f => f.Id == id)
+                .Include(f => f.Posts)
+                .ThenInclude(f => f.User)
+                .Include(f => f.Posts)
+                .ThenInclude(p => p.Replies)
+                .ThenInclude(r => r.User)
+                .Include(f=>f.Posts)
+                .ThenInclude(p=>p.Forum)
                 .FirstOrDefault();
 
             //var forum = _context.Forums
@@ -111,6 +112,40 @@ namespace WebCommunity.Services
             var forum = GetById(id);
             forum.Title = title;
 
+            _context.Update(forum);
+            await _context.SaveChangesAsync();
+        }
+
+        public bool HasRecentPost(int id)
+        {
+            const int hoursAgo = 12;
+            var window = DateTime.Now.AddHours(-hoursAgo);
+            return GetById(id).Posts.Any(post => post.Created >= window);
+        }
+
+        public Post GetLatestPost(int forumId)
+        {
+            var posts = GetById(forumId).Posts;
+
+            if (posts != null)
+            {
+                return GetById(forumId).Posts
+                    .OrderByDescending(post => post.Created)
+                    .FirstOrDefault();
+            }
+            return new Post();
+        }
+
+        public async Task Add(Forum forum)
+        {
+            _context.Add(forum);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task SetForumImage(int id, Uri uri)
+        {
+            var forum = GetById(id);
+            forum.ImageUrl = uri.AbsoluteUri;
             _context.Update(forum);
             await _context.SaveChangesAsync();
         }

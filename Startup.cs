@@ -65,6 +65,8 @@ namespace WebCommunity
 
             services.AddScoped<IForum, WebCommunity.Services.ForumService>();
             services.AddScoped<IPost, PostService>();
+            services.AddScoped<IPostReply, PostReplyService>();
+            //services.AddSingleton<IUpload, UploadService>();
 
         }
 

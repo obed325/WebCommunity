@@ -16,6 +16,7 @@ using WebCommunity.Models;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using WebCommunity.Services;
+using SignalRChat.Hubs;//SignalR
 
 namespace WebCommunity
 {
@@ -67,6 +68,7 @@ namespace WebCommunity
             services.AddScoped<IPost, PostService>();
             services.AddScoped<IPostReply, PostReplyService>();
             //services.AddSingleton<IUpload, UploadService>();
+            services.AddSignalR();     //SignalR
 
         }
 
@@ -98,6 +100,7 @@ namespace WebCommunity
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chathub");//SignalR
             });
         }
     }

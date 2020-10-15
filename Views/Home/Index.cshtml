@@ -1,4 +1,6 @@
-﻿@model WebCommunity.Models.HomeIndexModel
+﻿
+
+@model WebCommunity.Models.HomeIndexModel
 
 <div class="container body-content">
     <div class="row frontPageSplash">
@@ -7,7 +9,7 @@
             <p class="frontPageSubHeading">Tjöta och var delaktig</p>
             <div>
                 <form asp-controller="Search" asp-action="Search" method="post">
-                    <input asp-for="SearchQuery" type="text" class="homeSearch" placeholder="Search/Sök..."/>
+                    <input asp-for="SearchQuery" type="text" class="homeSearch" placeholder="Search/Sök..." />
                 </form>
             </div>
         </div>
@@ -17,7 +19,7 @@
         <h3 id="latestPosts">Latest Posts</h3>
         <table class="table table-hover" id="latestPostsTable">
             <tbody>
-                @foreach(var post in Model.LatestPosts)
+                @foreach (var post in Model.LatestPosts)
                 {
                     <tr>
                         <td>
@@ -28,11 +30,11 @@
                                 </a>
                             </div>
                             <div class="postSubTitle">
-                                @if(post.RepliesCount == 1)
+                                @if (post.RepliesCount == 1)
                                 {
                                     <span>@post.RepliesCount Reply</span>
                                 }
-                                @if(post.RepliesCount == 0)
+                                @if (post.RepliesCount == 0)
                                 {
                                     <span>No replies</span>
                                 }
@@ -53,3 +55,4 @@
         </table>
     </div>
 </div>
+@*From SignalR*@

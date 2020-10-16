@@ -4,12 +4,7 @@
     <div class="row sectionHeader">
         <div class="sectionHeading">
             <span>@Model.Forum.Name Forum</span>
-            @if (Context.User.Identity.IsAuthenticated)
-            {
-                <span id="headingBtn">
-                    <a asp-controller="Post" asp-action="Create" asp-route-id="@Model.Forum.Id" class="btn btn-newPost">Create Post</a>
-                </span>
-            }
+
             <form asp-controller="Forum" asp-action="Search" method="post">
                 <div class="searchForm">
                     <input asp-for="SearchQuery" type="text" placeholder="Sök/Search..." class="searchBar" onfocus="clearThis(this)" />
@@ -19,6 +14,17 @@
                 </div>
                 <input asp-for="Forum.Id" name="id" type="hidden" />
             </form>
+
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <div id="divHeadingBtn">
+                <span id="headingBtn">
+                    <a asp-controller="Post" asp-action="Create" asp-route-id="@Model.Forum.Id" class="btn btn-newPost">
+                        Create Post
+                    </a>
+                </span>
+                </div>
+            }
         </div>
 
         <div class="sectionDescription">
@@ -31,7 +37,7 @@
                 }
             </p>
         </div>
-        </div>
+    </div>
 
 
         @*<span id="headingBtn">
@@ -95,17 +101,22 @@
             </div>
         }
 
-        else if (!@Model.Forum.AllPosts.Any())
+        //else if (!@Model.Forum.AllPosts.Any())
+        else if (!@Model.Posts.Any())
         {
             <div class="noPosts">
                 <h4>
                     Det ser ut som forumet @Model.Forum.Name inte har några inlägg än.<br />
-
+                    It looks like @Model.Forum.Name is empty.   
                     <a asp-controller="Post" asp-action="Create" asp-route-id="@Model.Forum.Id">
                         <span>Skapa</span> ett inlägg...
                     </a>
                 </h4>
             </div>
+        }
+        else if (Model.Forum.AllPosts == null)
+        {
+
         }
 
     </div>

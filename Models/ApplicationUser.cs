@@ -13,5 +13,8 @@ namespace WebCommunity.Models
         public string ProfileImageUrl { get; set; }
         public DateTime MemberSince { get; set; }
         public bool IsActive { get; set; }
+        public bool IsAdmin { get; set; }
+        public string UserDescription { get; set; }
+
     }
 }

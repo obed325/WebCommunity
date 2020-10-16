@@ -90,7 +90,7 @@ namespace WebCommunity.Services
 
         public IEnumerable<Post> GetFilteredPosts(Forum forum, string searchQuery)
         {
-            //var forum = _context.Forums.Find(id);
+            
 
             return string.IsNullOrEmpty(searchQuery)
                 ? forum.Posts
@@ -110,12 +110,16 @@ namespace WebCommunity.Services
                 .Where(p => p.Subject.ToLower().Contains(query)
                  || p.Content.ToLower().Contains(query));
             return posts;
+
+            //return GetAll().Where(p 
+            //    => p.Subject.Contains(searchQuery)
+            //    || p.Content.Contains(searchQuery));
         }
 
-        public IEnumerable<Post> GetFilteredPosts(int forumId, string modelSearchQuery)
-        {
-            throw new NotImplementedException();
-        }
+        //public IEnumerable<Post> GetFilteredPosts(int forumId, string modelSearchQuery)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public string GetForumImageUrl(int id)
         {

@@ -22,7 +22,7 @@ namespace WebCommunity.Controllers
             _forumService = forumService;
             _postService = postService;
         }
-
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
         public IActionResult Index()
         {
             var forums = _forumService.GetAll()
@@ -47,6 +47,8 @@ namespace WebCommunity.Controllers
 
             return View(model);
         }
+
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
         public IActionResult Topic(int id, string searchQuery)
         {
             var forum = _forumService.GetById(id);

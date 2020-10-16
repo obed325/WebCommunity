@@ -68,11 +68,11 @@ namespace WebCommunity.Controllers
             var post = BuildPost(model, user);
 
             await _postService.Add(post);
-           // _postService.Add(post).Wait();//block current thread until task completed
+            // _postService.Add(post).Wait();//block current thread until task completed
             //todo: user rating management
 
             //return RedirectToAction("Index", "Post", post.Id);
-            return RedirectToAction("Index", "Post", new { id = post.Id});
+            return RedirectToAction("Index", "Post", new { id = post.Id });
         }
 
         private bool IsAuthorAdmin(ApplicationUser user)

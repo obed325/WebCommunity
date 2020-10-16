@@ -11,7 +11,7 @@ namespace WebCommunity.Models
         //IEnumerable<Forum> GetAll();
         IEnumerable<Post> GetAll();
         IEnumerable<Post> GetFilteredPosts(Forum forum, string searchQuery);
-        IEnumerable<Post> GetFilteredPosts(int forumId, string modelSearchQuery);
+        //IEnumerable<Post> GetFilteredPosts(int forumId, string modelSearchQuery);
         IEnumerable<Post> GetPostsByForum(int id);
         IEnumerable<Post> GetLatestPosts(int n);
 

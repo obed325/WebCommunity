@@ -66,12 +66,14 @@ namespace WebCommunity
             services.AddScoped<IForum, WebCommunity.Services.ForumService>();
             services.AddScoped<IPost, PostService>();
             services.AddScoped<IPostReply, PostReplyService>();
+            services.AddScoped<IApplicationUser, ApplicationUserService>();
+            //services.AddScoped<IPostFormatter, PostFormatter>();
             //services.AddSingleton<IUpload, UploadService>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -99,6 +101,27 @@ namespace WebCommunity
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            //create an admin if not exists
+            CreateUserRoles(serviceProvider).Wait();
+        }
+
+        private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            IdentityResult roleResult;
+            //Add Admin role
+            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
+            if(!roleCheck)
+            {
+                //create role (or roles) and seed to db
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+            //assign Admin role to the main user we have given our newly registred
+            //login id for Admin management
+            ApplicationUser user = await UserManager.FindByEmailAsync("obed325@hotmail.com");
+            await UserManager.AddToRoleAsync(user, "Admin");
         }
     }
 }

@@ -48,6 +48,11 @@ namespace WebCommunity.Controllers
             return RedirectToAction("Results", new { searchQuery });
         }
 
+        private static ForumListingModel BuildForumListing(Post post)
+        {
+            var forum = post.Forum;
+            return BuildForumListing(forum);
+        }
         private static ForumListingModel BuildForumListing(Models.Forum forum)
         {
             return new ForumListingModel
@@ -59,10 +64,5 @@ namespace WebCommunity.Controllers
             };
         }
 
-        private static ForumListingModel BuildForumListing(Post post)
-        {
-            var forum = post.Forum;
-            return BuildForumListing(forum);
-        }
     }
 }

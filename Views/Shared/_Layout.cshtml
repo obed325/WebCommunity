@@ -22,9 +22,12 @@
                     </li>
                     @if (SignInManager.IsSignedIn(User))
                     {
+                        <li>
+                            <a class="nav-link text-dark" asp-controller="Chat" asp-action="Chat">Chat</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
-                            
+
                             <ul class="dropdown-menu">
                                 <li role="separator" class="divider nav-item"></li>
                                 <li class="dropdown-header nav-item">Profile</li>
@@ -37,9 +40,6 @@
                                     <li><a class="nav-link text-dark" asp-controller="Profile" asp-action="Index">View Users</a></li>
                                 }
                             </ul>
-                        </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-controller="Chat" asp-action="Chat">Chat</a>
                         </li>
                     }
                 </ul>

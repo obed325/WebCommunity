@@ -8,14 +8,15 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using WebCommunity.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebCommunity.Data;
 using WebCommunity.Models;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using WebCommunity.Services;
+using WebCommunity.Hubs;
 
 namespace WebCommunity
 {
@@ -69,6 +70,8 @@ namespace WebCommunity
             services.AddScoped<IApplicationUser, ApplicationUserService>();
             //services.AddScoped<IPostFormatter, PostFormatter>();
             //services.AddSingleton<IUpload, UploadService>();
+            services.AddSignalRCore();
+            services.AddSignalR();
 
         }
 
@@ -100,7 +103,11 @@ namespace WebCommunity
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chathub");
             });
+
+            
+
             //create an admin if not exists
             CreateUserRoles(serviceProvider).Wait();
         }

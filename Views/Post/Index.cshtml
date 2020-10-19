@@ -1,4 +1,5 @@
-﻿@model WebCommunity.Models.PostIndexModel
+﻿@*@model WebCommunity.Models.PostIndexModel*@
+@model PostIndexModel
 
 <div class="container body-content">
     <div class="row postHeader">
@@ -18,11 +19,11 @@
             <a asp-controller="Profile" asp-action="Detail" asp-route-id="@Model.AuthorId">
                 @Model.AuthorName
             </a>
-            <span class="postData">@Model.Created</span>
             @if (Model.IsAuthorAdmin)
             {
-                <span class="isAdmin smaller">Admin</span>
+                <span class="isAdmin smaller">Admin</span><i class="material-icons"></i>
             }
+            <span class="postData smaller">@Model.Created</span>
         </div>
         <div class="col-md-9 postContentContainer">
             <div class="postContent">
@@ -31,17 +32,6 @@
         </div>
     </div>
 
-    <div class="row" id="replyDivider"></div>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <div class="row">
-            <span>
-                <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-newReply">
-                    Post reply
-                </a>
-            </span>
-        </div>
-    }
 
     @if (Model.Replies.Any())
     {
@@ -49,16 +39,15 @@
         {
             <div class="row replyContent">
                 <div class="col-md-3 replyAuthorContainer">
-                    <div class="postAuthorImage" style="background-image: url(@reply.AuthorId"></div>
+                    <div class="postAuthorImage" style="background-image: url(@reply.AuthorImageUrl"></div>
                     <a asp-controller="Profile" asp-action="Detail" asp-route-id="@reply.AuthorId">
                         @reply.AuthorName
                     </a>
                     @if (reply.IsAuthorAdmin)
                     {
-                        <div class="isAdmin smaller">Admin</div>
-                        <br />
+                        <span class="isAdmin smaller">Admin</span>
                     }
-                    <span>@reply.Created</span>
+                    <div>@reply.Created</div>
                 </div>
                 <div class="col-md-9 replyContentContainer">
                     <div class="postContent">
@@ -76,34 +65,18 @@
             </h3>
         </div>
     }
-</div>
 
-@*/////////////////*@
-
-<h3>@Model.Title</h3>
-
-<div>
-    Author: @Model.AuthorName (@Model.AuthorRating)
-    Created: @Model.Created
-</div>
-
-<div>
-    @Model.PostContent
-</div>
-
-@if (Model.Replies.Any())
-{
-    foreach (var reply in Model.Replies)
+    <div class="row" id="replyDivider"></div>
+    @if (User.Identity.IsAuthenticated)
     {
-    <div>
-        <div>
-            Reply Author: @reply.AuthorName
-            Reply Created: @reply.Created
+        <div class="row">
+            <span>
+                <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-newReply">
+                    Post reply
+                </a>
+            </span>
         </div>
-
-        <div>
-            @reply.ReplyContent
-        </div>
-    </div>
     }
-}
+
+</div>
+

@@ -16,7 +16,7 @@ namespace WebCommunity.Controllers
         private readonly IForum _forumService;
 
         private static UserManager<ApplicationUser> _userManager;
-        public PostController(IPost postService, IForum forumService, UserManager<ApplicationUser>userManager)
+        public PostController(IPost postService, IForum forumService, UserManager<ApplicationUser> userManager)
         {
             _postService = postService;
             _forumService = forumService;
@@ -46,7 +46,7 @@ namespace WebCommunity.Controllers
         }
 
 
-        public IActionResult Create (int id)
+        public IActionResult Create(int id)
         {
             var forum = _forumService.GetById(id);
 

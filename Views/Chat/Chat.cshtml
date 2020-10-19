@@ -1,29 +1,26 @@
 ﻿@*@model WebCommunity.Controllers.ChatController*@
+
 @page
+@using Microsoft.AspNetCore.Identity
+@model ApplicationUser
+@inject UserManager<WebCommunity.Models.ApplicationUser> UserManager
 
 
-<div class="container">
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-2">User</div>
-        <div class="col-4"><input type="text" id="userInput" /></div>
+<div class="container form-group">
+
+    <div class="form-group">
+        <label class="control-label">@User.Identity.Name</label>
+        <input type="text" id="userInput" class="form-control" placeholder="@User.Identity.Name">
     </div>
-    <div class="row">
-        <div class="col-2">Message</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
+    <div class="form-group">
+        <label class="control-label">Message</label>
+        <input type="text" id="messageInput" class="form-control" />
     </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-6">
-            <input type="button" id="sendButton" value="Send/Skicka" />
-        </div>
+    <div class="form-group">
+        <input type="button" id="sendButton" value="Send/Skicka" class="btn btn-success" />
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
-        <hr />
-    </div>
-</div>
+
 <div class="row">
     <div class="col-6">
         <ul id="messagesList" style="list-style: none;"></ul>
@@ -33,10 +30,10 @@
 <script src="~/js/chat.js"></script>
 
 <script>
-  
+
     var input = document.getElementById('messageInput');
     input.addEventListener("keyup", function (event) {
-        if ((event.keyCode === 13) && (document.getElementById('messageInput').value !== "" )) {
+        if ((event.keyCode === 13) && (document.getElementById('messageInput').value !== "")) {
             event.preventDefault();
             document.getElementById('sendButton').click();
             document.getElementById('messageInput').value = "";

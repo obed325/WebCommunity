@@ -3,6 +3,7 @@
 @page
 @using Microsoft.AspNetCore.Identity
 @model ApplicationUser
+
 @inject UserManager<WebCommunity.Models.ApplicationUser> UserManager
 
 
@@ -10,7 +11,8 @@
 
     <div class="form-group">
         <label class="control-label">Name</label>
-        <input type="text" id="userInput" class="form-control" value="@User.Identity.Name" >
+        <input type="text" id="userInput" class="form-control" value="@User.Identity.Name">
+        <input type="hidden" value="@User.Identity.Name" id="identityName" />
     </div>
     <div class="form-group">
         <label class="control-label">Message</label>
@@ -26,6 +28,10 @@
         <ul id="messagesList" style="list-style: none;"></ul>
     </div>
 </div>
+
+<input type="hidden" id="inputtext" />
+
+
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
 
@@ -40,4 +46,71 @@
             document.getElementById('messageInput').focus();
         }
     })
+
+
+    function getChatConversations() {
+
+        $.ajax({
+            type: "GET",
+            url: "/Chat/OnGetChatConversations",
+            dataType: text,
+            success: function () {
+                console.log("recived");
+            }
+        })
+        return dataType;
+    }
+
+    //var textflow;
+    var idName = document.getElementById('identityName').value;
+    var target = document.getElementById('messagesList');
+
+    //if (document.getElementById('messagesList').childNodes.length === 0) {
+
+    //    let chats = getChatConversations();
+    //    document.getElementById('messagesList').value = chats;
+    //}
+
+    var observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            var newTags = mutation.addedNodes;
+            if (newTags !== null) { //if there are new nodes
+                var $nodes = $(newTags);
+
+                $nodes.each(function () {
+                    var $node = $(this);
+
+                    textflow = $node[0].outerHTML;
+                    saveMessToDb(textflow, idName);
+                });
+            }
+            else if (document.getElementById('messagesList').childNodes == 0) {
+                var chats = getChatConversations();
+
+            }
+        })
+    })
+    // Options for the observer (which mutations to observe)
+    const config = { attributes: true, childList: true, subtree: true };
+    observer.observe(target, config);//set what to observe
+
+
+    function saveMessToDb(flow, idName) {
+
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("SaveChat")",
+            data: { "parameter1": flow, "identityName": idName },
+   
+            success: function (msg) {
+                console.log(msg);
+            },
+            error: function (req, status, error) {
+                console.log(msg);
+            }
+        });
+    }
+
+    
+
 </script>

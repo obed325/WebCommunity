@@ -85,7 +85,7 @@ namespace WebCommunity.Controllers
 
                 ApplicationUser appUser = new ApplicationUser
                 {
-                    //City = rightCityObject,
+
                     UserName = user.Name,
                     Email = user.Email
 

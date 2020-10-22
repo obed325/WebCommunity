@@ -8,12 +8,14 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveMessage", function (user, message) {
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var today = new Date();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var time = today.getHours() + ":" + (today.getMinutes() < 10 ? '0' : '') + today.getMinutes(); + ":" + today.getSeconds();
     var encodedMsg = user + " says " + msg + "  " + time;
  
     var li = document.createElement("li");
     li.textContent = encodedMsg;
     document.getElementById("messagesList").appendChild(li);
+
+   
 });
 
 connection.start().then(function () {
@@ -31,3 +33,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     });
     event.preventDefault();
 });
+
+
+
+

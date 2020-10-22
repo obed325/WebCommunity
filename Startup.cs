@@ -104,6 +104,9 @@ namespace WebCommunity
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/chathub");
+                endpoints.MapControllerRoute(
+                    name: "chat",
+                    pattern: "{controller=Chat}/{action=Chat}/{id?}");
             });
 
             

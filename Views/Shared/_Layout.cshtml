@@ -34,7 +34,7 @@
                                 <li><a class="nav-link text-dark" asp-controller="Profile" asp-action="Detail">My profile</a></li>
                                 @if (User.IsInRole("Admin"))
                                 {
-                                    <div class="dropdown-divider"></div>
+                                    @*<div class="dropdown-divider"></div>*@
                                     <li class="dropdown-header nav-item">Admin</li>
                                     <li><a class="nav-link text-dark" asp-controller="Forum" asp-action="Create">Create Forum</a></li>
                                     <li><a class="nav-link text-dark" asp-controller="Profile" asp-action="Index">View Users</a></li>

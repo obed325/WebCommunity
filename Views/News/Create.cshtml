@@ -1,0 +1,103 @@
+﻿@model WebCommunity.Models.NewsVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3>Create</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Headline" class="control-label"></label>
+                <input asp-for="Headline" class="form-control" />
+                <span asp-validation-for="Headline" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewsText" class="control-label"></label>
+                <textarea asp-for="NewsText" class="form-control" id="NewsText"></textarea>
+                <span asp-validation-for="NewsText" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PicName" class="control-label"></label>
+                <input asp-for="PicName" class="form-control" />
+                <span asp-validation-for="PicName" class="text-danger"></span>
+            </div>
+
+            <div class=form-group>
+                <label class="control-label" id="picture">Picture</label>
+                <input asp-for="UploadFile" type="file" onchange="previewFile()" accept="image/*" ID="fileInput" name="UploadFile" runat="server"><br />
+                <label class="text-danger" id="lblWarning"></label>
+                <div id="divBild">
+                    <img src="" alt="Preview pic shown here" id="imgPreview">
+                </div>
+            </div>
+
+            <script>
+                function previewFile() {
+                    var preview = document.querySelector('#imgPreview');
+                    var file = document.querySelector('input[type=file]').files[0];
+                    //var filesize = document.querySelector('input[type=file]').files[0].size;
+                    var reader = new FileReader();
+
+                    reader.addEventListener("load", function () {
+                        preview.src = reader.result;
+                    }, false);
+
+                    if (file) {
+                        reader.readAsDataURL(file);
+                        document.getElementById("divBildLabel").style.visibility = "hidden";
+                    };
+
+                    reader.onload = function () {
+                        var img = new Image;
+                        img.src = reader.result;
+                        var w = img.width;
+                        var h = img.height;
+                        document.getElementById("lblPicture").innerHTML = "Picture format " + h + "x" + w;
+                        if (h < 250 && w < 250) {
+                            document.getElementById("lblWarning").innerHTML = "<h3>" + h + "x" + w + " is too small picture, choose another!</h3> Get format bigger than 250x250";
+                        };
+                    };
+
+                }
+            </script>
+
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<style>
+    #imgPreview {
+        max-height: 300px;
+        max-width: 300px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: lightgray;
+        position: relative;
+    }
+</style>

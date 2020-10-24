@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using WebCommunity.Services;
 using WebCommunity.Hubs;
+using WebCommunity.Helpers;
 
 namespace WebCommunity
 {
@@ -64,6 +65,7 @@ namespace WebCommunity
 
             //services.AddTransient<IEmailSender, EmailSender>();
 
+            services.AddScoped<IDeleteImages, DeleteImages>();
             services.AddScoped<IForum, WebCommunity.Services.ForumService>();
             services.AddScoped<IPost, PostService>();
             services.AddScoped<IPostReply, PostReplyService>();

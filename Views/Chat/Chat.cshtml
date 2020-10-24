@@ -31,7 +31,7 @@
 
 <input type="hidden" id="inputtext" />
 
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
 
@@ -48,20 +48,6 @@
     })
 
 
-    function getChatConversations() {
-
-        $.ajax({
-            type: "GET",
-            url: "/Chat/OnGetChatConversations",
-            dataType: text,
-            success: function () {
-                console.log("recived");
-            }
-        })
-        return dataType;
-    }
-
-    //var textflow;
     var idName = document.getElementById('identityName').value;
     var target = document.getElementById('messagesList');
 
@@ -70,29 +56,37 @@
     //    let chats = getChatConversations();
     //    document.getElementById('messagesList').value = chats;
     //}
+    var hasTags = document.getElementById("messagesList");
 
-    var observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            var newTags = mutation.addedNodes;
-            if (newTags !== null) { //if there are new nodes
-                var $nodes = $(newTags);
+    if (hasTags.hasChildNodes()) {
 
-                $nodes.each(function () {
-                    var $node = $(this);
+        // Options for the observer (mutations to observe)
+        const config = { attributes: true, childList: true, subtree: true };
+        observer.observe(target, config);//set what to observe
 
-                    textflow = $node[0].outerHTML;
-                    saveMessToDb(textflow, idName);
-                });
-            }
-            else if (document.getElementById('messagesList').childNodes == 0) {
-                var chats = getChatConversations();
 
-            }
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                var newTags = mutation.addedNodes;
+                if (newTags !== null) { //if there are new nodes
+                    var $nodes = $(newTags);
+
+                    $nodes.each(function () {
+                        var $node = $(this);
+
+                        textflow = $node[0].outerHTML;
+                        saveMessToDb(textflow, idName);
+                    });
+                }
+
+            })
         })
-    })
-    // Options for the observer (which mutations to observe)
-    const config = { attributes: true, childList: true, subtree: true };
-    observer.observe(target, config);//set what to observe
+    }
+    else {
+        let idName = document.getElementById("identityName").value
+        getChatConversations(idName);
+    }
+
 
 
     function saveMessToDb(flow, idName) {
@@ -101,7 +95,7 @@
             type: 'POST',
             url: "@Url.Action("SaveChat")",
             data: { "parameter1": flow, "identityName": idName },
-   
+
             success: function (msg) {
                 console.log(msg);
             },
@@ -112,5 +106,28 @@
     }
 
     
+
+    function getChatConversations(idName) {
+        
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("GetChatConversations")",
+            data: { "identityName": idName },
+            dataType: "text",
+
+            success: function (messageHistory) {
+
+                document.getElementById("messagesList").outerHTML = messageHistory;
+
+            },
+            error: function (req, status, error) {
+                console.log(msg);
+            }
+
+        });
+
+    }
+
+
 
 </script>

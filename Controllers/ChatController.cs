@@ -60,10 +60,16 @@ namespace WebCommunity.Controllers
             return View();
         }
 
-        public string OnGetChatConversations()
+        public string GetChatConversations(string identityName)
         {
-            //string messageHistory;
-            var messageHistory = _context.Chats.Select(x=>x.ChatHistory).ToString();
+            var chatMatches = _context.Chats.Where(x => x.IdName == identityName).Select(x => x.ChatHistory).Take(10);
+
+            string messageHistory = "";
+            foreach(string item in chatMatches)
+            {
+                messageHistory += item;
+            }
+
             return messageHistory;
         }
 

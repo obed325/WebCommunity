@@ -18,5 +18,6 @@ namespace WebCommunity.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostReply> PostReplies { get; set; }
         public DbSet<Chat> Chats { get; set; }
+        public DbSet<News> News { get; set; }
     }
 }

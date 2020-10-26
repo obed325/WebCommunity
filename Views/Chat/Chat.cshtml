@@ -56,9 +56,10 @@
     //    let chats = getChatConversations();
     //    document.getElementById('messagesList').value = chats;
     //}
-    var hasTags = document.getElementById("messagesList");
 
-    if (hasTags.hasChildNodes()) {
+    //var hasTags = document.getElementById("messagesList");
+
+    //if (hasTags.hasChildNodes()) {
 
         // Options for the observer (mutations to observe)
         const config = { attributes: true, childList: true, subtree: true };
@@ -81,11 +82,11 @@
 
             })
         })
-    }
-    else {
-        let idName = document.getElementById("identityName").value
-        getChatConversations(idName);
-    }
+    //}
+    //else {
+    //    let idName = document.getElementById("identityName").value
+    //    getChatConversations(idName);
+    //}
 
 
 
@@ -107,7 +108,7 @@
 
     
 
-    function getChatConversations(idName) {
+    @*function getChatConversations(idName) {
         
         $.ajax({
             type: 'POST',
@@ -126,7 +127,7 @@
 
         });
 
-    }
+    }*@
 
 
 

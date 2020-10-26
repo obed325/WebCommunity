@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebCommunity.Data;
 using WebCommunity.Helpers;
@@ -31,19 +32,72 @@ namespace WebCommunity.Controllers
         }
 
         // GET: NewsController
-        public ActionResult Index()
+        public IActionResult Index()
         {
+          
             NewsVM newsVM = new NewsVM();
             newsVM.AllNews = _context.News.OrderBy(n => n.Created).ToList();
-             
+
             return View(newsVM);
+
+        }
+        //public IActionResult View(int id)
+        //{
+
+        //    NewsVM newsVM = new NewsVM();
+        //    newsVM.AllNews = _context.News.OrderBy(n => n.Created).ToList();
+
+        //    return View(newsVM);
+        //}
+
+
+        // GET: NewsController/Details/5
+        public async Task<IActionResult> ViewAsync(int? id)
+        {
+            News news = new News();
+            news = await _context.News.FirstOrDefaultAsync(n => n.Id == id);
+
+            return View(news);
         }
 
         // GET: NewsController/Details/5
-        public ActionResult View(int id)
+        public async Task<IActionResult> NewsItem()
         {
-            return View();
+            News news = new News();
+            news = _context.News.OrderByDescending(n => n.Created).FirstOrDefault();
+            return View(news);
+
+            //News news = new News();
+            //news = await _context.News.OrderBy(n=>n.Created).Take(1);
+
+            //return View(news);
         }
+        public async Task<IActionResult> GetNews(HomeIndexModel him, string searchString)
+        {
+
+            NewsVM nVM = new NewsVM();
+
+            nVM.AllNews = _context.News.OrderBy(n => n.Created).ToList();
+
+            if (!string.IsNullOrEmpty(searchString) )
+            {
+                nVM.AllNews = _context.News.Where(s => s.NewsText.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            }
+            else if (!string.IsNullOrEmpty(searchString))
+            {
+                nVM.AllNews = _context.News.Where(s => s.Category.Contains(searchString)).ToList();
+            }
+            else if (him.NewsBackwards == true)
+            {
+                nVM.AllNews = _context.News.OrderByDescending(n => n.Created).ToList();
+            }
+            else
+            {
+                nVM.AllNews = _context.News.ToList();
+            }
+            return View(nVM);
+        }
+
 
         // GET: NewsController/Create
         public ActionResult Create()
@@ -57,7 +111,7 @@ namespace WebCommunity.Controllers
         {
             var _news = new Models.News();
 
-            if (UploadFile != null && UploadFile.Length >= 0)
+            if (UploadFile != null) //&& (UploadFile.Length > 0))
             {
 
                 var fileExtension = Path.GetExtension(UploadFile.FileName);
@@ -67,8 +121,7 @@ namespace WebCommunity.Controllers
 
                 using (FileStream stream = new FileStream(picturePath, FileMode.Create))
                 {
-
-                    newsVM.UploadFile.CopyToAsync(stream);
+                    UploadFile.CopyTo(stream);
                 }
 
                 int startPosToSelect = picturePath.IndexOf("wwwroot\\Upload", System.StringComparison.CurrentCultureIgnoreCase);
@@ -90,11 +143,12 @@ namespace WebCommunity.Controllers
                 _context.News.Add(_news);
                 _context.SaveChanges();
 
-                return RedirectToAction(nameof(View));
+                return RedirectToAction(nameof(View), new { _news.Id });
+                //return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -123,9 +177,14 @@ namespace WebCommunity.Controllers
         public async Task<ActionResult>DeleteAsync(int? id)
         {
 
-            var news = await _context.News.FirstOrDefaultAsync(m => m.Id == id);
+            News news = await _context.News.FirstOrDefaultAsync(m => m.Id == id);
 
-            return View();
+            if (news == null)
+            {
+                return NotFound();
+            }
+
+            return View(news);
         }
 
         // POST: NewsController/Delete/5
@@ -145,7 +204,7 @@ namespace WebCommunity.Controllers
                 news = await _context.News.FindAsync(id);
 
                 //kills belonged pictures
-                if (news.PicGuid.Length > 0 && news.PictureUrl.Length > 0)
+                if ((news.PicGuid != null)) // || (news.PicGuid.Length > 0 )|| (news.PictureUrl.Length > 0))
                 {
                     _deleteImages.Delete(news.PictureUrl, news.PicGuid);
                 }
@@ -156,14 +215,14 @@ namespace WebCommunity.Controllers
                     await _context.SaveChangesAsync();
                 }
 
-                return RedirectToPage("./Index");
+                //return RedirectToPage("./Index");
 
-
-                //return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
+                //return View("Index");
             }
         }
     }

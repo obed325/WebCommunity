@@ -17,13 +17,13 @@ namespace WebCommunity.Models
         [Required(ErrorMessage = "Please don't forget the news")]
         public string NewsText { get; set; }
 
-        public DateTime Created { get; set; }
+        public DateTime? Created { get; set; }
 
-        public string PictureUrl { get; set; }
+        public string PictureUrl { get; set; } = "";
 
         [StringLength(100)]
-        public string PicName { get; set; }
-        public string PicGuid { get; set; }
+        public string PicName { get; set; } = "";
+        public string PicGuid { get; set; } = "";
 
         [StringLength(50)]
         public string Author { get; set; }

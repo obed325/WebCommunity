@@ -1,4 +1,4 @@
-﻿@model NewsVM
+﻿@model NewsVM       
 
 
 @{
@@ -17,7 +17,7 @@
                 @Html.DisplayNameFor(model => model.Headline)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewsText)
+                Text
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Created)
@@ -26,12 +26,15 @@
                 @Html.DisplayNameFor(model => model.Author)
             </th>
             <th>
+                Picture
+            </th>
+            <th id="tdUrl">
                 @Html.DisplayNameFor(model => model.PictureUrl)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PicName)
             </th>
-            <th>
+            <th id="tdGuid">
                 @Html.DisplayNameFor(model => model.PicGuid)
             </th>
 
@@ -56,13 +59,28 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
-            <td>
+            <td id="tdPic">
+                @if (item.PictureUrl != null)
+                {
+                    <img src="@Html.DisplayFor(modelItem => item.PictureUrl)" alt="Image" style="max-height:100px; max-width:100px" />
+                }
+                else if ((item.PicGuid.Length > 0) || (item.PictureUrl.Length > 0))
+                {
+                    <text>No picture selected</text>
+                }
+                else
+                {
+                    <text>No picture selected</text>
+                }
+
+            </td>
+            <td class="small">
                 @Html.DisplayFor(modelItem => item.PictureUrl)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PicName)
             </td>
-            <td>
+            <td class="small">
                 @Html.DisplayFor(modelItem => item.PicGuid)
             </td>
 
@@ -70,11 +88,22 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a><br />
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a><br />
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a><br />
+                <a asp-action="View" asp-route-id="@item.Id">View</a><br />
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<style>
+    #tdPic {
+        padding: unset;
+        vertical-align: middle;
+    }
+    #tdUrl{
+
+    }
+</style>

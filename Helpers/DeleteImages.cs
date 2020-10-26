@@ -30,9 +30,11 @@ namespace WebCommunity.Helpers
                 return;
             };
 
-            if (Directory.Exists(Path.Combine(webRoot, path + "/")))
+            var p = path.Substring(0, path.LastIndexOf('\\')); //remove filename from path. 
+
+            if (Directory.Exists(Path.Combine(webRoot, p)))
             {
-                var _fullPath = Path.Combine(webRoot, path + "/");
+                var _fullPath = Path.Combine(webRoot, p + "/");
 
                 string[] fileList = Directory.GetFiles(_fullPath, "*" + partialFileName + "*");
                 foreach (string file in fileList)

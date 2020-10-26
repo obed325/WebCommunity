@@ -1,8 +1,5 @@
-﻿@model WebCommunity.Models.News
+﻿@model WebCommunity.Models.NewsVM
 
-@{
-    ViewData["Title"] = "View";
-}
 
 <div class="container-fluid">
     <div class="row">
@@ -18,51 +15,44 @@
             </div>
         </div>
     </div>
-    <div class="row d-flex justify-content-between" id="divTextPicture" >
-
+    <div class="row d-flex justify-content-between" id="divTextPicture">
         <div id="divText">
             @Html.DisplayFor(model => model.NewsText)
         </div>
-
         <div id="divPicture">
             @if (Model.PictureUrl != null)
             {
-                <img src="~/@Url.Content(Model.PictureUrl)"  id="imgNews" />
+            <img src="~/@Url.Content(Model.PictureUrl)" id="imgNews" />
             }
             <div class="small" style="text-align:center">
                 @Html.DisplayFor(model => model.PicName)
             </div>
         </div>
-
     </div>
-   
 </div>
 
-<style>
-    #divHeader{
-        width:100%;
-        font-size:larger;
-        font-weight:600;
-    }
-    #divHeadline{
 
+<style>
+    #divHeader {
+        width: 100%;
+        font-size: larger;
+        font-weight: 600;
+    }
+    #divHeadline {
     }
     #divCreated {
         /*float: right;*/
     }
-    #divTextPicture{
-        width:inherit;
+    #divTextPicture {
+        width: inherit;
     }
-    #divText{
-
+    #divText {
     }
-    #divPicture{
-
+    #divPicture {
     }
     #imgNews {
         float: right;
-        max-height:90px;
+        max-height: 90px;
     }
-
 </style>
 

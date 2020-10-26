@@ -1,0 +1,77 @@
+﻿@{
+}
+@model WebCommunity.Models.HomeIndexModel
+
+
+<div style="width:100%">
+    <div class="row" style="width:inherit">
+
+    </div>
+    @foreach (var item in Model.LatestNews)
+    {
+        <div class="row">
+            <div id="divHeader" class="d-flex justify-content-between">
+                <div id="divHeadline">
+                    @Html.DisplayFor(modelItem => item.Headline)
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </div>
+                <div id="divCreated" class="small">
+                    @Html.DisplayFor(modelItem => item.Created)
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-between" id="divTextPicture">
+            <div id="divText">
+                @Html.DisplayFor(modelItem => item.NewsText)
+            </div>
+            <div id="divNewsFeedPicture">
+                @if (item.PictureUrl != null)
+                {
+                    <img src="~/@Url.Content(item.PictureUrl)" id="imgNewsFeed" />
+
+                    <div class="small" style="text-align:center">
+                        @Html.Display(item.PicName)
+                    </div>
+                }
+            </div>
+        </div>
+        <hr />
+    }
+
+</div>
+
+
+<style>
+  
+    #divHeader {
+        width: 100%;
+        font-size: larger;
+        font-weight: 600;
+    }
+
+    #divHeadline {
+    }
+
+    #divCreated {
+        /*float: right;*/
+    }
+
+    #divTextPicture {
+        width: inherit;
+    }
+
+    #divText {
+    }
+
+    #divNewsFeedPicture {
+    }
+
+    #imgNewsFeed {
+        float: right;
+        max-height: 90px;
+        max-width: 100px;
+    }
+</style>
+

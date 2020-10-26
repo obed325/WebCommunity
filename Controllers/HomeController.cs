@@ -13,14 +13,18 @@ namespace WebCommunity.Controllers
     public class HomeController : Controller
     {
         private readonly IPost _postService;
-        public HomeController(IPost postService)
+        private readonly ApplicationDbContext _context;
+        public HomeController(IPost postService, ApplicationDbContext context)
         {
             _postService = postService;
+            _context = context;
         }
 
         public IActionResult Index()
         {
             var model = BuildHomeIndexModel();
+            model.LatestNews = _context.News.OrderBy(n => n.Created).Take(10).ToList();
+            
             return View(model);
         }
 
@@ -45,6 +49,7 @@ namespace WebCommunity.Controllers
             {
                 LatestPosts = posts,
                 SearchQuery = ""
+                
             };
         }
 

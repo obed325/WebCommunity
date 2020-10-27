@@ -3,7 +3,7 @@
 @model WebCommunity.Models.HomeIndexModel
 
 
-<div style="width:100%">
+<div style="width:100%; padding-right:5px;">
     <div class="row" style="width:inherit">
 
     </div>
@@ -11,22 +11,22 @@
     {
         <div class="row">
             <div id="divHeader" class="d-flex justify-content-between">
-                <div id="divHeadline">
+                <div id="divHeadline" class="col-7">
                     @Html.DisplayFor(modelItem => item.Headline)
                 </div>
-                <div class="small">
+                <div class="small col-2">
                     @Html.DisplayFor(modelItem => item.Category)
                 </div>
-                <div id="divCreated" class="small">
+                <div id="divCreated" class="col-3">
                     @Html.DisplayFor(modelItem => item.Created)
                 </div>
             </div>
         </div>
-        <div class="row d-flex justify-content-between" id="divTextPicture">
-            <div id="divText">
+        <div class="row d-flex justify-content-between flex-nowrap" id="divTextPicture">
+            <div id="divText" class="col-8">
                 @Html.DisplayFor(modelItem => item.NewsText)
             </div>
-            <div id="divNewsFeedPicture">
+            <div id="divNewsFeedPicture" class="col-4">
                 @if (item.PictureUrl != null)
                 {
                     <img src="~/@Url.Content(item.PictureUrl)" id="imgNewsFeed" />
@@ -56,6 +56,8 @@
 
     #divCreated {
         /*float: right;*/
+        font-size: small;
+        padding-right:4px;
     }
 
     #divTextPicture {

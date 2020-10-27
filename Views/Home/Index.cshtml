@@ -17,22 +17,22 @@
         </div>
     </div>
 
-    <div class="col col-6">
+    <div class="col col-6" style="padding-left:10px">
 
         <div class="container body-content">
             <div class="row frontPageSplash">
-                <div class="col-md-6 frontPageLearn">
+                <div style="padding:16px;">   @*class="col-md-6 frontPageLearn"*@
                     @*<div class="frontPageHeading">Samarbeta över ditt forum</div>*@
-                    
-                        When Roger, Anders, and I Nils got the assignment of creating a Community we were thrilled to explore how we were given free hands to do our project.
-                    
-                        <div>
+
+                    When Roger, Anders, and I Nils got the assignment of creating a Community we were thrilled to explore how we were given free hands to do our project.
+
+                    <div>
                         <form asp-controller="Search" asp-action="Search" method="post">
                             <input asp-for="SearchQuery" type="text" class="homeSearch" placeholder="Search/Sök..." />
                         </form>
                     </div>
                 </div>
-                <div class="col-md-6"></div>
+                @*<div class="col-md-6"></div>*@
             </div>
             <div class="row frontPageContent">
                 <h3 id="latestPosts">Latest Posts</h3>

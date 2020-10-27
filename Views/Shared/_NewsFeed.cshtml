@@ -14,7 +14,7 @@
                 <div id="divHeadline">
                     @Html.DisplayFor(modelItem => item.Headline)
                 </div>
-                <div>
+                <div class="small">
                     @Html.DisplayFor(modelItem => item.Category)
                 </div>
                 <div id="divCreated" class="small">
@@ -63,15 +63,18 @@
     }
 
     #divText {
+        max-width:300px;
+        min-width:216px;
     }
 
     #divNewsFeedPicture {
+        float: right;
     }
 
     #imgNewsFeed {
         float: right;
         max-height: 90px;
-        max-width: 100px;
+        max-width: 90px;
     }
 </style>
 

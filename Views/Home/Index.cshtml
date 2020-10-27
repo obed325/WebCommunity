@@ -4,23 +4,29 @@
 
 <div class="row">
 
-    <div class="col col-4" style="width:100%">
-        <div class="row">
-            @Html.ActionLink("Z-A", "GetNews", "News")
+    <div class="col col-6" style="width:100%">
+        <div class="row rowLinkToCategories">
+            <a class="btn btn-outline-secondary btn-sm linkToCategories" asp-action="IndexCategory" ,"Home" asp-route-category="Tech">Tech</a>
+            <a class="btn btn-outline-secondary btn-sm linkToCategories" asp-action="IndexCategory" ,"Home" asp-route-category="Kultur">Kultur</a>
+            <a class="btn btn-outline-secondary btn-sm linkToCategories" asp-action="IndexCategory" ,"Home" asp-route-category="Djur">Djur</a>
+            <a class="btn btn-outline-secondary btn-sm linkToCategories" asp-action="IndexCategory" ,"Home" asp-route-category="Övrigt">Övrigt</a>
+            <a class="btn btn-outline-secondary btn-sm linkToCategories" asp-action="Index" ,"Home">Sortera som vanligt</a>
         </div>
         <div class="row">
             @await Html.PartialAsync("_NewsFeed")
         </div>
     </div>
 
-    <div class="col col-8">
+    <div class="col col-6">
 
         <div class="container body-content">
             <div class="row frontPageSplash">
                 <div class="col-md-6 frontPageLearn">
-                    <div class="frontPageHeading">Samarbeta över ditt forum</div>
-                    <p class="frontPageSubHeading">Tjöta och var delaktig</p>
-                    <div>
+                    @*<div class="frontPageHeading">Samarbeta över ditt forum</div>*@
+                    
+                        When Roger, Anders, and I Nils got the assignment of creating a Community we were thrilled to explore how we were given free hands to do our project.
+                    
+                        <div>
                         <form asp-controller="Search" asp-action="Search" method="post">
                             <input asp-for="SearchQuery" type="text" class="homeSearch" placeholder="Search/Sök..." />
                         </form>
@@ -70,5 +76,13 @@
         </div>
 
     </div>@*col*@
-
 </div>
+
+<style>
+    .linkToCategories{
+        margin-left: 5px;
+    }
+    .rowLinkToCategories{
+        margin-bottom: 5px;
+    }
+</style>

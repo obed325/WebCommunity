@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebCommunity.Models;
 using WebCommunity.Data;
+using System.Globalization;
 
 namespace WebCommunity.Controllers
 {
@@ -20,10 +21,19 @@ namespace WebCommunity.Controllers
             _context = context;
         }
 
+        public IActionResult IndexCategory(string category)
+        {
+            var model = BuildHomeIndexModel();
+            
+            model.LatestNews = _context.News.Where(n=>n.Category.ToLower().Contains(category.ToLower())).OrderByDescending(n => n.Created).Take(10).ToList();
+
+            return View("Index", model);
+        }
+
         public IActionResult Index()
         {
             var model = BuildHomeIndexModel();
-            model.LatestNews = _context.News.OrderBy(n => n.Created).Take(10).ToList();
+            model.LatestNews = _context.News.OrderByDescending(n => n.Created).Take(10).ToList();
             
             return View(model);
         }

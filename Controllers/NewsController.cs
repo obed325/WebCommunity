@@ -41,15 +41,6 @@ namespace WebCommunity.Controllers
             return View(newsVM);
 
         }
-        //public IActionResult View(int id)
-        //{
-
-        //    NewsVM newsVM = new NewsVM();
-        //    newsVM.AllNews = _context.News.OrderBy(n => n.Created).ToList();
-
-        //    return View(newsVM);
-        //}
-
 
         // GET: NewsController/Details/5
         public async Task<IActionResult> ViewAsync(int? id)
@@ -87,10 +78,10 @@ namespace WebCommunity.Controllers
             {
                 nVM.AllNews = _context.News.Where(s => s.Category.Contains(searchString)).ToList();
             }
-            else if (him.NewsBackwards == true)
-            {
-                nVM.AllNews = _context.News.OrderByDescending(n => n.Created).ToList();
-            }
+            //else if (him.NewsBackwards == true)
+            //{
+            //    nVM.AllNews = _context.News.OrderByDescending(n => n.Created).ToList();
+            //}
             else
             {
                 nVM.AllNews = _context.News.ToList();
@@ -155,16 +146,62 @@ namespace WebCommunity.Controllers
         // GET: NewsController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            News news = _context.News.Where(n => n.Id == id).FirstOrDefault();
+            
+            return View(news);
         }
 
         // POST: NewsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(News news, IFormFile UploadFile)
         {
+            News _news = _context.News.Find(news.Id);
+
             try
             {
+                //Loading/show current picture
+                string oldImagePath = news.PictureUrl; 
+                string oldImageGuid = news.PicGuid;
+                //ViewBag.imagePathAndName = imagePathAndName;
+
+
+                if (UploadFile != null) //&& (UploadFile.Length > 0))
+                {
+
+                    var fileExtension = Path.GetExtension(UploadFile.FileName);
+                    string pictureFolderPath = ImagePathBuilder.NewPath(_env.WebRootPath);
+                    var _picGuid = Guid.NewGuid().ToString();
+                    var picturePath = (Path.Combine(pictureFolderPath, (_picGuid))) + fileExtension;
+
+                    using (FileStream stream = new FileStream(picturePath, FileMode.Create))
+                    {
+                        UploadFile.CopyTo(stream);
+                    }
+
+                    int startPosToSelect = picturePath.IndexOf("wwwroot\\Upload", System.StringComparison.CurrentCultureIgnoreCase);
+                    string relativePicturePath = picturePath.Substring(startPosToSelect + 8); //cut after "wwwroot/"
+
+                    _news.PictureUrl = relativePicturePath;
+                    _news.PicGuid = _picGuid;
+                    _news.PicName = news.PicName;
+                }
+                _news.Author = news.Author;
+                _news.Headline = news.Headline;
+                _news.NewsText = news.NewsText;
+                _news.Category = news.Category;
+                //newsVM.Created = DateTime.Now;
+
+
+                _context.Update(_news);
+                _context.SaveChangesAsync();
+
+                if ((oldImageGuid != null)) // || (news.PicGuid.Length > 0 )|| (news.PictureUrl.Length > 0))
+                {
+                    _deleteImages.Delete(oldImagePath, oldImageGuid);
+                }
+
+
                 return RedirectToAction(nameof(Index));
             }
             catch

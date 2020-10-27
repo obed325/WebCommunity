@@ -14,7 +14,7 @@ namespace WebCommunity.Models
 
         public List<News> LatestNews { get; set; }
 
-        public bool NewsBackwards { get; set; }
+        public string Category { get; set; }
 
     }
 }

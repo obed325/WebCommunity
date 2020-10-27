@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +34,39 @@ namespace WebCommunity.Models
 
         public string Category { get; set; }
 
+        [NotMapped]
+        [BindProperty]
+        public IFormFile UploadFile { get; set; }
+
+
+        public List<News> PopulateNews()
+        {
+            List<News> newsList = new List<News>
+            {
+                new News
+                {
+                    //Id = 11,
+                    Headline = "",
+                    NewsText = "",
+                    Created = Convert.ToDateTime("2020-01-02"),
+                    Author = "",
+                    PicName = "",
+                    Category = "",
+                },
+                new News
+                {
+                    //Id = 12,
+                    Headline = "",
+                    NewsText = "",
+                    Created = Convert.ToDateTime("2020-01-03"),
+                    Author = "",
+                    PicName = "",
+                    Category = "",
+                }
+
+            };
+            return newsList;
+        }
     }
 }
 

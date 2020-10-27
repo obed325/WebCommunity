@@ -161,8 +161,8 @@ namespace WebCommunity.Controllers
             try
             {
                 //Loading/show current picture
-                string oldImagePath = news.PictureUrl; 
-                string oldImageGuid = news.PicGuid;
+                string oldImagePath = _news.PictureUrl; 
+                string oldImageGuid = _news.PicGuid;
                 //ViewBag.imagePathAndName = imagePathAndName;
 
 

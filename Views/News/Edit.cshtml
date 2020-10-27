@@ -12,54 +12,55 @@
     <div class="col-md-4">
         
         <form asp-action="Edit" enctype="multipart/form-data" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
-                <div class="form-group">
-                    <label asp-for="Headline" class="control-label"></label>
-                    <input asp-for="Headline" class="form-control" />
-                    <span asp-validation-for="Headline" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="NewsText" class="control-label"></label>
-                    <textarea asp-for="NewsText" class="form-control" id="NewsText"></textarea>
-                    <span asp-validation-for="NewsText" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Created" class="control-label"></label>
-                    <input asp-for="Created" class="form-control" />
-                    <span asp-validation-for="Created" class="text-danger"></span>
-                </div>
-            
-                <div class="form-group">
-                    <label asp-for="PicName" class="control-label"></label>
-                    <input asp-for="PicName" class="form-control" />
-                    <span asp-validation-for="PicName" class="text-danger"></span>
-                </div>
-              
-                <div class="form-group">
-                    <label asp-for="Author" class="control-label"></label>
-                    <input asp-for="Author" class="form-control" />
-                    <span asp-validation-for="Author" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Category" class="control-label"></label>
-                    <input asp-for="Category" class="form-control" />
-                    <span asp-validation-for="Category" class="text-danger"></span>
-                </div>
-                <div class=form-group>
-                    <label class="control-label" id="picture">Picture</label>
-                    <input asp-for="UploadFile" type="file" onchange="previewFile()" accept="image/*" ID="fileInput" name="UploadFile" runat="server"><br />
-                    <label class="text-danger" id="lblWarning"></label>
-                    <div id="divBild">
-                        <img src="" alt="Preview pic shown here" id="imgPreview">
-                    </div>
-                </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Headline" class="control-label"></label>
+                <input asp-for="Headline" class="form-control" />
+                <span asp-validation-for="Headline" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewsText" class="control-label"></label>
+                <textarea asp-for="NewsText" class="form-control" id="NewsText"></textarea>
+                <span asp-validation-for="NewsText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" class="form-control" />
+                <span asp-validation-for="Created" class="text-danger"></span>
+            </div>
 
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group">
+                <label asp-for="PicName" class="control-label"></label>
+                <input asp-for="PicName" class="form-control" />
+                <span asp-validation-for="PicName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class=form-group>
+                <label class="control-label" id="picture">Picture</label>
+                <input asp-for="UploadFile" type="file" onchange="previewFile()" accept="image/*" ID="fileInput" name="UploadFile" runat="server"><br />
+                <label class="text-danger" id="lblWarning"></label>
+                <div id="divBild">
+                    <img src="" alt="Preview pic shown here" id="imgPreview">
                 </div>
-            </form>
-</div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <img src="~/@Url.Content(Model.PictureUrl)" alt="New pic shown here" id="currentPic">
+        </form>
+    </div>
 </div>
 
 <div>
@@ -102,6 +103,14 @@
 
 <style>
     #imgPreview {
+        max-height: 300px;
+        max-width: 300px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: lightgray;
+        position: relative;
+    }
+    #currentPic {
         max-height: 300px;
         max-width: 300px;
         border-style: solid;

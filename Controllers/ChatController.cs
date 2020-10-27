@@ -57,6 +57,7 @@ namespace WebCommunity.Controllers
                 _context.Chats.Add(newMessage);
                 _context.SaveChanges();
             }
+
             return View();
         }
 

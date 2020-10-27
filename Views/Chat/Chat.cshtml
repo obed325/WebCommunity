@@ -1,8 +1,10 @@
-﻿@*@model WebCommunity.Controllers.ChatController*@
-
+﻿
 @page
+
+@model WebCommunity.Controllers.ChatController
+
 @using Microsoft.AspNetCore.Identity
-@model ApplicationUser
+@*model ApplicationUser*@
 
 @inject UserManager<WebCommunity.Models.ApplicationUser> UserManager
 
@@ -27,6 +29,11 @@
     <div class="form-group">
         <ul id="messagesList" style="list-style: none;"></ul>
     </div>
+</div>
+
+<div>
+
+
 </div>
 
 <input type="hidden" id="inputtext" />
@@ -61,27 +68,30 @@
 
     //if (hasTags.hasChildNodes()) {
 
-        // Options for the observer (mutations to observe)
-        const config = { attributes: true, childList: true, subtree: true };
-        observer.observe(target, config);//set what to observe
+
+    var observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+
+            var newTags = mutation.addedNodes;
+            if (newTags !== null) { //if there are new nodes
+                var $nodes = $(newTags);
+
+                $nodes.each(function () {
+                    var $node = $(this);
+
+                    textflow = $node[0].outerHTML;
+                    saveMessToDb(textflow, idName);
+                });
+            }
+
+        });
+    });
+
+    // Options for the observer (mutations to observe)
+    const config = { attributes: true, childList: true, subtree: true };
+    observer.observe(target, config);//set what to observe
 
 
-        var observer = new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutation) {
-                var newTags = mutation.addedNodes;
-                if (newTags !== null) { //if there are new nodes
-                    var $nodes = $(newTags);
-
-                    $nodes.each(function () {
-                        var $node = $(this);
-
-                        textflow = $node[0].outerHTML;
-                        saveMessToDb(textflow, idName);
-                    });
-                }
-
-            })
-        })
     //}
     //else {
     //    let idName = document.getElementById("identityName").value
@@ -106,10 +116,10 @@
         });
     }
 
-    
+</script>
 
     @*function getChatConversations(idName) {
-        
+
         $.ajax({
             type: 'POST',
             url: "@Url.Action("GetChatConversations")",
@@ -131,4 +141,3 @@
 
 
 
-</script>
